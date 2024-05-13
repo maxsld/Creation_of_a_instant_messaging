@@ -14,17 +14,20 @@ public class Bavard implements PapotageListener {
 
     // Méthode pour envoyer un message de papotage à tous les auditeurs
     public void sendMessage(String sujet, String corps) {
-        PapotageEvent event = new PapotageEvent(sujet, corps);
+        PapotageEvent event = new PapotageEvent(sujet, corps, this.nom); // Inclure le nom du bavard comme expéditeur
         for (PapotageListener listener : listeners) {
-            listener.receivePapotage(event);
+            listener.onPapotageReceived(event);
         }
     }
 
     // Méthode appelée lorsqu'un papotage est reçu
     @Override
-    public void receivePapotage(PapotageEvent event) {
-        // Traitement du papotage reçu (dans cet exemple, simplement l'imprimer)
-        System.out.println("Bavard " + nom + " a reçu un papotage: " + event.getSujet() + " - " + event.getCorps());
+    public void onPapotageReceived(PapotageEvent event) {
+        // Vérifier si le message a été envoyé par ce bavard
+        if (!event.getExpediteur().equals(nom)) {
+            // Traitement du papotage reçu (dans cet exemple, simplement l'imprimer)
+            System.out.println("\nBavard " + nom + " a reçu un papotage: " + event.getSujet() + " - " + event.getCorps()+ " de la part de : " + event.getExpediteur());
+        }
     }
 
     // Méthode pour ajouter un auditeur de papotage

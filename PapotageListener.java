@@ -1,3 +1,3 @@
 public interface PapotageListener {
-    void receivePapotage(PapotageEvent event);
+    void onPapotageReceived(PapotageEvent event);
 }
