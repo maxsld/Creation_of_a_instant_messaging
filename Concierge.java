@@ -17,7 +17,10 @@ public class Concierge implements PapotageListener {
     }
 
     public void addBavard(PapotageListener bavard) {
-        bavardsConnectes.add(bavard);
+        // Vérifier si le bavard n'est pas déjà connecté avant de l'ajouter
+        if (!bavardsConnectes.contains(bavard)) {
+            bavardsConnectes.add(bavard);
+        }
     }
 
     public void removeBavard(PapotageListener bavard) {

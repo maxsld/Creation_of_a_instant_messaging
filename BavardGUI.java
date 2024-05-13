@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,11 +17,9 @@ public class BavardGUI extends JFrame {
     public BavardGUI() {
         setTitle("Gestion des Bavards");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 250);
+        setSize(340, 400); // Taille ajustée
         setLocationRelativeTo(null);
 
-        // Utilisation du look and feel Nimbus pour un aspect moderne
-        
         // Initialisation des composants
         nomField = new JTextField(20);
         creerBavardButton = new JButton("Créer Bavard");
@@ -33,25 +30,30 @@ public class BavardGUI extends JFrame {
         batiment = new Batiment();
         bavards = new ArrayList<>();
 
-        // Création d'un panneau principal avec une bordure vide
+        // Création d'un panneau principal avec une bordure vide et une disposition verticale
         JPanel mainPanel = new JPanel();
-        mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-        mainPanel.setLayout(new GridLayout(3, 1, 0, 10)); // Utilisation d'une disposition en grille
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
         // Création d'un panneau pour le champ de texte et le bouton de création
-        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         inputPanel.add(new JLabel("Nom du Bavard:"));
         inputPanel.add(nomField);
         inputPanel.add(creerBavardButton);
 
+        // Ajustement de la taille de la JComboBox et du JTextField
+        bavardComboBox.setPreferredSize(new Dimension(250, 30));
+        nomField.setPreferredSize(new Dimension(500, 30));
+
         // Création d'un panneau pour la JComboBox et le bouton de connexion
-        JPanel comboPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel comboPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         comboPanel.add(new JLabel("Bavard à connecter:"));
         comboPanel.add(bavardComboBox);
         comboPanel.add(connecterBavardButton);
 
         // Ajout des panneaux au panneau principal
         mainPanel.add(inputPanel);
+        mainPanel.add(Box.createVerticalStrut(10)); // Espace vertical
         mainPanel.add(comboPanel);
 
         // Ajout du panneau principal à la fenêtre
