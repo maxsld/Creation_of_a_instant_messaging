@@ -6,6 +6,10 @@ public class Bavard implements PapotageListener {
     private final String nom;
     private final List<PapotageListener> listeners;
 
+    public String getNom() {
+        return nom;
+    }
+
     // Constructeur
     public Bavard(String nom) {
         this.nom = nom;
