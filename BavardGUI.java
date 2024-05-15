@@ -17,7 +17,7 @@ public class BavardGUI extends JFrame {
     public BavardGUI() {
         setTitle("Gestion des Bavards");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(340, 400); // Taille ajustée
+        setSize(340, 400);
         setLocationRelativeTo(null);
 
         // Initialisation des composants
@@ -58,6 +58,11 @@ public class BavardGUI extends JFrame {
 
         // Ajout du panneau principal à la fenêtre
         add(mainPanel);
+
+        // Ajout des bavards existants à la JComboBox
+        for (Bavard bavard : bavards) {
+            bavardComboBox.addItem(bavard.getNom());
+        }
 
         // Ajout des listeners aux boutons
         creerBavardButton.addActionListener(new ActionListener() {

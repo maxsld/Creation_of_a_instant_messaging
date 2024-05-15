@@ -15,8 +15,25 @@ public class Main {
         batiment.connecterBavard(bavard1);
         batiment.connecterBavard(bavard3);
 
+        System.out.println("");
+
         // Envoi d'un message par Alice
         bavard1.sendMessage("Hello Word", "Ceci est un test");
         bavard3.sendMessage("sujet", "corps");
+
+
+        // Afficher la liste des bavards créés
+        batiment.afficherBavardsCrees();
+
+        // Afficher les bavards connectés
+        batiment.afficherBavardsConnectes();
+
+        // Afficher les bavards non connectés
+        batiment.afficherBavardsNonConnectes();
+
+        BavardGUI bavardGUI = new BavardGUI();
+
+        // Rendre l'interface visible
+        bavardGUI.setVisible(true);
     }
 }

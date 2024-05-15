@@ -30,7 +30,7 @@ public class Bavard implements PapotageListener {
         // Vérifier si le message a été envoyé par ce bavard
         if (!event.getExpediteur().equals(nom)) {
             // Traitement du papotage reçu (dans cet exemple, simplement l'imprimer)
-            System.out.println("\nBavard " + nom + " a reçu un papotage: " + event.getSujet() + " - " + event.getCorps()+ " de la part de : " + event.getExpediteur());
+            System.out.println("Bavard " + nom + " a reçu un papotage : " + "'" + event.getSujet() + " - " + event.getCorps() + "'" + " de la part de : " + event.getExpediteur());
         }
     }
 
