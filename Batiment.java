@@ -6,8 +6,8 @@ public class Batiment {
     private final List<Bavard> listBavardsCrees;
     private final List<Bavard> listBavardsConnectes;
 
-    public Batiment() {
-        this.concierge = new Concierge();
+    public Batiment(ConciergeUI conciergeUI) {
+        this.concierge = new Concierge(conciergeUI);
         this.listBavardsCrees = new ArrayList<>();
         this.listBavardsConnectes = new ArrayList<>();
     }
@@ -22,10 +22,10 @@ public class Batiment {
         listBavardsConnectes.add(bavard);
         concierge.addBavard(bavard);
         bavard.addPapotageListener(concierge);
-        System.out.println("\n"+bavard.getNom() + " has successfully connected");
+        System.out.println("\n" + bavard.getNom() + " has successfully connected");
     }
 
-    public void ajouterBavardCree(Bavard bavard){
+    public void ajouterBavardCree(Bavard bavard) {
         listBavardsCrees.add(bavard);
     }
 
@@ -36,14 +36,14 @@ public class Batiment {
         }
     }
 
-    public void afficherBavardsConnectes(){
+    public void afficherBavardsConnectes() {
         System.out.println("\nBavards connectés :");
         for (Bavard b : listBavardsConnectes) {
             System.out.println("- " + b.getNom());
         }
     }
 
-    public void afficherBavardsNonConnectes(){
+    public void afficherBavardsNonConnectes() {
         System.out.println("\n Bavards non connectés :");
         for (Bavard b : listBavardsCrees) {
             if (!listBavardsConnectes.contains(b)) {

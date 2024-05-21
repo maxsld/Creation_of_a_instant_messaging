@@ -22,13 +22,7 @@ public class ConciergeUI extends JFrame {
         add(panel, BorderLayout.SOUTH);
     }
 
-    public static void main(String[] args) {
-        // Lance l'application
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new ConciergeUI().setVisible(true);
-            }
-        });
+    public void addMessage(String message) {
+        messageArea.append(message + "\n");
     }
 }

@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BavardGUI extends JFrame {
     private final JTextField nomField;
@@ -12,9 +10,10 @@ public class BavardGUI extends JFrame {
     private final JComboBox<String> bavardComboBox;
 
     private Batiment batiment;
-    private Bavard bavards;
 
-    public BavardGUI() {
+    public BavardGUI(Batiment batiment) {
+        this.batiment = batiment; // Utiliser l'instance de Batiment passée en paramètre
+
         setTitle("Gestion des Bavards");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(340, 400);
@@ -25,9 +24,6 @@ public class BavardGUI extends JFrame {
         creerBavardButton = new JButton("Créer Bavard");
         connecterBavardButton = new JButton("Connecter Bavard");
         bavardComboBox = new JComboBox<>();
-
-        // Initialisation du batiment et de la liste des bavards
-        batiment = new Batiment();
 
         // Création d'un panneau principal avec une bordure vide et une disposition verticale
         JPanel mainPanel = new JPanel();
@@ -115,78 +111,4 @@ public class BavardGUI extends JFrame {
             }
         }
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new BavardGUI().setVisible(true);
-            }
-        });
-    }
 }
-
-class DeuxiemeInterface extends JFrame {
-    private JComboBox<String> connectedBavardComboBox;
-    private JButton sendMessageButton;
-    private Batiment batiment;
-
-    public DeuxiemeInterface(Batiment batiment) {
-        setTitle("Envoyer un Message");
-        setSize(300, 200);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        this.batiment = batiment;
-
-        // Initialisation des composants
-        connectedBavardComboBox = new JComboBox<>();
-        sendMessageButton = new JButton("Envoyer un Message");
-
-        // Création d'un panneau principal avec une bordure vide et une disposition verticale
-        JPanel mainPanel = new JPanel();
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-
-        // Création d'un panneau pour la JComboBox et le bouton d'envoi de message
-        JPanel comboPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        comboPanel.add(new JLabel("Bavard connecté:"));
-        comboPanel.add(connectedBavardComboBox);
-
-        // Ajout des composants au panneau principal
-        mainPanel.add(comboPanel);
-        mainPanel.add(Box.createVerticalStrut(10)); // Espace vertical
-        mainPanel.add(sendMessageButton);
-
-        // Ajout du panneau principal à la fenêtre
-        add(mainPanel);
-
-        // Ajout des listeners aux boutons
-        sendMessageButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nom = (String) connectedBavardComboBox.getSelectedItem();
-                if (nom != null) {
-                    new BavardInterface(nom).setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(DeuxiemeInterface.this, "Veuillez sélectionner un bavard connecté");
-                }
-            }
-        });
-
-        updateConnectedBavardComboBox();
-    }
-
-    private void updateConnectedBavardComboBox() {
-        connectedBavardComboBox.removeAllItems();
-        List<Bavard> connectedBavards = batiment.getListBavardsConnectes();
-        if (connectedBavards.isEmpty()) {
-            connectedBavardComboBox.addItem("Aucun bavard connecté");
-        } else {
-            for (Bavard b : connectedBavards) {
-                connectedBavardComboBox.addItem(b.getNom());
-            }
-        }
-    }
-}
-

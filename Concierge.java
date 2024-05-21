@@ -3,9 +3,11 @@ import java.util.List;
 
 public class Concierge implements PapotageListener {
     private final List<PapotageListener> bavardsConnectes;
+    private final ConciergeUI conciergeUI;
 
-    public Concierge() {
+    public Concierge(ConciergeUI conciergeUI) {
         this.bavardsConnectes = new ArrayList<>();
+        this.conciergeUI = conciergeUI;
     }
 
     @Override
@@ -14,6 +16,8 @@ public class Concierge implements PapotageListener {
         for (PapotageListener bavard : bavardsConnectes) {
             bavard.onPapotageReceived(event);
         }
+        // Ajouter le message à l'interface utilisateur
+        conciergeUI.addMessage("Sujet: " + event.getSujet() + "\nMessage: " + event.getCorps() + "\nDe: " + event.getExpediteur() + "\n");
     }
 
     public void addBavard(PapotageListener bavard) {
