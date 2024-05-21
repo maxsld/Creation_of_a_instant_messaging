@@ -83,7 +83,7 @@ public class BavardInterface extends JFrame {
     }
 
     // Method to update the received messages area
-    public void receiveMessage(String subject, String body) {
-        receivedMessagesArea.append("Sujet: " + subject + "\n" + "Message: " + body + "\n\n");
+    public void receiveMessage(String message){
+        receivedMessagesArea.append(message);
     }
 }

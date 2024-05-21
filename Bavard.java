@@ -5,6 +5,7 @@ import java.util.List;
 public class Bavard implements PapotageListener {
     private final String nom;
     private final List<PapotageListener> listeners;
+    private final BavardInterface bavardInterface;
 
     public String getNom() {
         return nom;
@@ -14,6 +15,7 @@ public class Bavard implements PapotageListener {
     public Bavard(String nom) {
         this.nom = nom;
         this.listeners = new ArrayList<>();
+        this.bavardInterface = new BavardInterface(this);
     }
 
     // Méthode pour envoyer un message de papotage à tous les auditeurs
@@ -29,7 +31,8 @@ public class Bavard implements PapotageListener {
     public void onPapotageReceived(PapotageEvent event) {
         // Vérifier si le message a été envoyé par ce bavard
         if (!event.getExpediteur().equals(nom)) {
-            // Traitement du papotage reçu (dans cet exemple, simplement l'imprimer)
+            // Mise à jour de l'interface avec le nouveau message
+            bavardInterface.receiveMessage("Bavard " + nom + " a reçu un papotage : " + "'" + event.getSujet() + " - " + event.getCorps() + "'" + " de la part de : " + event.getExpediteur());
             System.out.println("Bavard " + nom + " a reçu un papotage : " + "'" + event.getSujet() + " - " + event.getCorps() + "'" + " de la part de : " + event.getExpediteur());
         }
     }
