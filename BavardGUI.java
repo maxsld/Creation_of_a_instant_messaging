@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -59,11 +60,6 @@ public class BavardGUI extends JFrame {
         // Ajout du panneau principal à la fenêtre
         add(mainPanel);
 
-        // Ajout des bavards existants à la JComboBox
-        for (Bavard bavard : bavards) {
-            bavardComboBox.addItem(bavard.getNom());
-        }
-
         // Ajout des listeners aux boutons
         creerBavardButton.addActionListener(new ActionListener() {
             @Override
@@ -71,9 +67,9 @@ public class BavardGUI extends JFrame {
                 String nom = nomField.getText();
                 if (!nom.isEmpty()) {
                     Bavard bavard = batiment.creerBavard(nom);
-                    bavards.add(bavard); // Ajouter le bavard à la liste des bavards
-                    bavardComboBox.addItem(nom); // Ajouter le nom du bavard à la JComboBox
+                    updateBavardComboBox(); // Mettre à jour la JComboBox
                     JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " créé avec succès!");
+                    batiment.afficherBavardsCrees();
                 } else {
                     JOptionPane.showMessageDialog(BavardGUI.this, "Veuillez saisir un nom pour le Bavard!");
                 }
@@ -86,10 +82,12 @@ public class BavardGUI extends JFrame {
                 String nom = (String) bavardComboBox.getSelectedItem(); // Récupérer le nom du bavard sélectionné dans la JComboBox
                 if (nom != null) {
                     // Récupérer le bavard correspondant au nom sélectionné
-                    for (Bavard bavard : bavards) {
+                    for (Bavard bavard : batiment.getListBavardsCrees()) {
                         if (bavard.getNom().equals(nom)) {
                             batiment.connecterBavard(bavard); // Connecter le bavard sélectionné
+                            updateBavardComboBox(); // Mettre à jour la JComboBox
                             JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " connecté avec succès!");
+                            batiment.afficherBavardsConnectes();
                             break;
                         }
                     }
@@ -100,6 +98,15 @@ public class BavardGUI extends JFrame {
         });
     }
 
+    private void updateBavardComboBox() {
+        bavardComboBox.removeAllItems();
+        for (Bavard b : batiment.getListBavardsCrees()) {
+            if (!batiment.getListBavardsConnectes().contains(b)) {
+                bavardComboBox.addItem(b.getNom());
+            }
+        }
+    }
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override

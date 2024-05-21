@@ -22,7 +22,11 @@ public class Batiment {
         listBavardsConnectes.add(bavard);
         concierge.addBavard(bavard);
         bavard.addPapotageListener(concierge);
-        System.out.println(bavard.getNom() + " has successfully connected");
+        System.out.println("\n"+bavard.getNom() + " has successfully connected");
+    }
+
+    public void ajouterBavardCree(Bavard bavard){
+        listBavardsCrees.add(bavard);
     }
 
     public void afficherBavardsCrees() {
@@ -46,6 +50,16 @@ public class Batiment {
                 System.out.println("- " + b.getNom());
             }
         }
+    }
+
+    public List<String> afficherBavardsNonConnectesrList() {
+        List<String> nonConnectes = new ArrayList<>();
+        for (Bavard b : listBavardsCrees) {
+            if (!listBavardsConnectes.contains(b)) {
+                nonConnectes.add(b.getNom());
+            }
+        }
+        return nonConnectes;
     }
 
     public List<Bavard> getListBavardsCrees() {

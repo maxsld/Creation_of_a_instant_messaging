@@ -31,6 +31,8 @@ public class Main {
         // Afficher les bavards non connectés
         batiment.afficherBavardsNonConnectes();
 
+        batiment.afficherBavardsNonConnectesrList();
+
         BavardGUI bavardGUI = new BavardGUI();
 
         // Rendre l'interface visible
