@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BavardGUI extends JFrame {
-    private JTextField nomField;
-    private JButton creerBavardButton;
-    private JButton connecterBavardButton;
-    private JComboBox<String> bavardComboBox;
+    private final JTextField nomField;
+    private final JButton creerBavardButton;
+    private final JButton connecterBavardButton;
+    private final JComboBox<String> bavardComboBox;
 
     private Batiment batiment;
-    private List<Bavard> bavards;
+    private Bavard bavards;
 
     public BavardGUI() {
         setTitle("Gestion des Bavards");
@@ -28,7 +28,6 @@ public class BavardGUI extends JFrame {
 
         // Initialisation du batiment et de la liste des bavards
         batiment = new Batiment();
-        bavards = new ArrayList<>();
 
         // Création d'un panneau principal avec une bordure vide et une disposition verticale
         JPanel mainPanel = new JPanel();
@@ -161,7 +160,6 @@ class DeuxiemeInterface extends JFrame {
 
         // Ajout du panneau principal à la fenêtre
         add(mainPanel);
-        
 
         // Ajout des listeners aux boutons
         sendMessageButton.addActionListener(new ActionListener() {
@@ -169,9 +167,9 @@ class DeuxiemeInterface extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String nom = (String) connectedBavardComboBox.getSelectedItem();
                 if (nom != null) {
-                    JOptionPane.showMessageDialog(DeuxiemeInterface.this, "Message envoyé avec le bavard " + nom + "!");
+                    new BavardInterface(nom).setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(DeuxiemeInterface.this, "Veuillez sélectionner un bavard connecté!");
+                    JOptionPane.showMessageDialog(DeuxiemeInterface.this, "Veuillez sélectionner un bavard connecté");
                 }
             }
         });
@@ -179,7 +177,6 @@ class DeuxiemeInterface extends JFrame {
         updateConnectedBavardComboBox();
     }
 
-    
     private void updateConnectedBavardComboBox() {
         connectedBavardComboBox.removeAllItems();
         List<Bavard> connectedBavards = batiment.getListBavardsConnectes();
@@ -192,3 +189,4 @@ class DeuxiemeInterface extends JFrame {
         }
     }
 }
+

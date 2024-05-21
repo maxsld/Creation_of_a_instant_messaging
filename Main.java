@@ -34,8 +34,10 @@ public class Main {
         // batiment.afficherBavardsNonConnectesrList();
 
         BavardGUI bavardGUI = new BavardGUI();
+        ConciergeUI conciergeUI = new ConciergeUI();
 
         // Rendre l'interface visible
         bavardGUI.setVisible(true);
+        conciergeUI.setVisible(true);
     }
 }
