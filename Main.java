@@ -6,32 +6,32 @@ public class Main {
         // Création du concierge
         Concierge concierge = new Concierge();
 
-        // Ajout des bavards au bâtiment
-        Bavard bavard1 = batiment.creerBavard("Alice");
-        Bavard bavard2 = batiment.creerBavard("Bob");
-        Bavard bavard3 = batiment.creerBavard("Charlie");
+        // // Ajout des bavards au bâtiment
+        // Bavard bavard1 = batiment.creerBavard("Alice");
+        // Bavard bavard2 = batiment.creerBavard("Bob");
+        // Bavard bavard3 = batiment.creerBavard("Charlie");
 
-        // Connexion des bavards au concierge
-        batiment.connecterBavard(bavard1);
-        batiment.connecterBavard(bavard3);
+        // // Connexion des bavards au concierge
+        // batiment.connecterBavard(bavard1);
+        // batiment.connecterBavard(bavard3);
 
-        System.out.println("");
+        // System.out.println("");
 
-        // Envoi d'un message par Alice
-        bavard1.sendMessage("Hello Word", "Ceci est un test");
-        bavard3.sendMessage("sujet", "corps");
+        // // Envoi d'un message par Alice
+        // bavard1.sendMessage("Hello Word", "Ceci est un test");
+        // bavard3.sendMessage("sujet", "corps");
 
 
-        // Afficher la liste des bavards créés
-        batiment.afficherBavardsCrees();
+        // // Afficher la liste des bavards créés
+        // batiment.afficherBavardsCrees();
 
-        // Afficher les bavards connectés
-        batiment.afficherBavardsConnectes();
+        // // Afficher les bavards connectés
+        // batiment.afficherBavardsConnectes();
 
-        // Afficher les bavards non connectés
-        batiment.afficherBavardsNonConnectes();
+        // // Afficher les bavards non connectés
+        // batiment.afficherBavardsNonConnectes();
 
-        batiment.afficherBavardsNonConnectesrList();
+        // batiment.afficherBavardsNonConnectesrList();
 
         BavardGUI bavardGUI = new BavardGUI();
 
