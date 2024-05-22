@@ -10,6 +10,7 @@ public class ConciergeUI extends JFrame {
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setLocation(50, 250);
 
         // Initialise les composants
         messageArea = new JTextArea();
