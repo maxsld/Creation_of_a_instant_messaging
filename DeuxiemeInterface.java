@@ -6,8 +6,8 @@ import java.util.List;
 
 public class DeuxiemeInterface extends JFrame {
     private JComboBox<String> connectedBavardComboBox;
-    private JButton sendMessageButton;
-    private Batiment batiment;
+    private final JButton sendMessageButton;
+    private final Batiment batiment;
 
     public DeuxiemeInterface(Batiment batiment) {
         setTitle("Envoyer un Message");

@@ -26,4 +26,8 @@ public class ConciergeUI extends JFrame {
     public void addMessage(String message) {
         messageArea.append(message + "\n");
     }
+
+    public void addConnecteBavavard(String message){
+        messageArea.append(message + "\n");
+    }
 }

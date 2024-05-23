@@ -70,7 +70,15 @@ public class BavardInterface extends JFrame {
     private void sendMessage() {
         String subject = subjectField.getText();
         String body = bodyArea.getText();
-        bavard.sendMessage(subject, body);
+        if (subject.isEmpty() && body.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Veuillez remplir le sujet et le message.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (subject.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Veuillez remplir le sujet.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            bavard.sendMessage(subject, body);
+        }
     }
 
     public void addMessage(String message) {

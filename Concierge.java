@@ -29,6 +29,10 @@ public class Concierge implements PapotageListener {
         }
     }
 
+    public void connectBavard(Bavard bavard){
+        conciergeUI.addConnecteBavavard("Bavard : " + bavard.getNom() + "s'est connecté !");
+    }
+
     public void removeBavard(Bavard bavard) {
         bavardsConnectes.remove(bavard);
         bavard.setConcierge(null); // Retirer le concierge du bavard
