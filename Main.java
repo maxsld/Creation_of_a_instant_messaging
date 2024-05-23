@@ -7,7 +7,6 @@ public class Main {
             public void run() {
                 // Initialiser l'interface du Concierge
                 ConciergeUI conciergeUI = new ConciergeUI();
-                
                 // Créer une instance de Batiment avec l'interface du Concierge
                 Batiment batiment = new Batiment(conciergeUI);
                 

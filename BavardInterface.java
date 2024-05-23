@@ -1,16 +1,14 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class BavardInterface extends JFrame {
-
-    private JTextField subjectField;
-    private JTextArea bodyArea;
-    private JButton sendButton;
-    private Bavard bavard;
-    private JTextArea receivedMessagesArea;
+    private final JTextField subjectField;
+    private final JTextArea bodyArea;
+    private final JButton sendButton;
+    private final Bavard bavard;
+    private final JTextArea receivedMessagesArea;
 
     public BavardInterface(Bavard bavard) {
         setTitle("Interface de " + bavard.getNom());
@@ -19,6 +17,7 @@ public class BavardInterface extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.bavard = bavard;
+        this.bavard.setBavardInterface(this); // Associer cette interface au bavard
 
         // Ajout d'un simple label pour l'exemple
         JLabel label = new JLabel("Interface de " + bavard.getNom());
@@ -30,7 +29,6 @@ public class BavardInterface extends JFrame {
         // Panel for subject
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new GridLayout(2, 2));
-
         topPanel.add(new JLabel("Sujet:"));
         subjectField = new JTextField();
         topPanel.add(subjectField);
@@ -38,7 +36,6 @@ public class BavardInterface extends JFrame {
         // Panel for body
         JPanel bodyPanel = new JPanel();
         bodyPanel.setLayout(new BorderLayout());
-
         bodyPanel.add(new JLabel("Message:"), BorderLayout.NORTH);
         bodyArea = new JTextArea();
         JScrollPane scrollPane = new JScrollPane(bodyArea);
@@ -52,7 +49,6 @@ public class BavardInterface extends JFrame {
         // Panel for received messages
         JPanel receivedMessagesPanel = new JPanel();
         receivedMessagesPanel.setLayout(new BorderLayout());
-
         receivedMessagesPanel.add(new JLabel("Messages reçus:"), BorderLayout.NORTH);
         receivedMessagesArea = new JTextArea();
         receivedMessagesArea.setEditable(false);
@@ -66,24 +62,18 @@ public class BavardInterface extends JFrame {
         add(receivedMessagesPanel, BorderLayout.EAST);
 
         // Action listener for the send button
-        sendButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sendMessage();
-            }
+        sendButton.addActionListener((ActionEvent e) -> {
+            sendMessage();
         });
     }
 
     private void sendMessage() {
         String subject = subjectField.getText();
         String body = bodyArea.getText();
-
-        // Send the message
         bavard.sendMessage(subject, body);
     }
 
-    // Method to update the received messages area
-    public void receiveMessage(String message){
-        receivedMessagesArea.append(message);
+    public void addMessage(String message) {
+        receivedMessagesArea.append(message + "\n");
     }
 }

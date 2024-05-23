@@ -19,14 +19,18 @@ public class Batiment {
     }
 
     public void connecterBavard(Bavard bavard) {
-        listBavardsConnectes.add(bavard);
-        concierge.addBavard(bavard);
-        bavard.addPapotageListener(concierge);
-        System.out.println("\n" + bavard.getNom() + " has successfully connected");
+        if (!listBavardsConnectes.contains(bavard)) {
+            listBavardsConnectes.add(bavard);
+            concierge.addBavard(bavard);
+            bavard.setConcierge(concierge); // Set the concierge for the bavard
+            System.out.println("\n" + bavard.getNom() + " has successfully connected");
+        }
     }
 
     public void ajouterBavardCree(Bavard bavard) {
-        listBavardsCrees.add(bavard);
+        if (!listBavardsCrees.contains(bavard)) {
+            listBavardsCrees.add(bavard);
+        }
     }
 
     public void afficherBavardsCrees() {
@@ -44,7 +48,7 @@ public class Batiment {
     }
 
     public void afficherBavardsNonConnectes() {
-        System.out.println("\n Bavards non connectés :");
+        System.out.println("\nBavards non connectés :");
         for (Bavard b : listBavardsCrees) {
             if (!listBavardsConnectes.contains(b)) {
                 System.out.println("- " + b.getNom());
