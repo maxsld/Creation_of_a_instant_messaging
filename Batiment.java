@@ -27,6 +27,15 @@ public class Batiment {
         }
     }
 
+    public void deconnecterBavard(Bavard bavard) {
+        if (listBavardsConnectes.contains(bavard)) {
+            listBavardsConnectes.remove(bavard);
+            concierge.removeBavard(bavard);
+            bavard.setConcierge(null); // Set the concierge for the bavard
+            System.out.println("\n" + bavard.getNom() + " has successfully deconnected");
+        }
+    }
+
     public void ajouterBavardCree(Bavard bavard) {
         if (!listBavardsCrees.contains(bavard)) {
             listBavardsCrees.add(bavard);

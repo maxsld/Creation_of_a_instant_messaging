@@ -25,16 +25,16 @@ public class Concierge implements PapotageListener {
         // Vérifier si le bavard n'est pas déjà connecté avant de l'ajouter
         if (!bavardsConnectes.contains(bavard)) {
             bavardsConnectes.add(bavard);
+            conciergeUI.addMessage("Bavard : " + bavard.getNom() + " s'est connecté !");
             bavard.setConcierge(this); // Définir le concierge pour le bavard
         }
     }
 
-    public void connectBavard(Bavard bavard){
-        conciergeUI.addConnecteBavavard("Bavard : " + bavard.getNom() + "s'est connecté !");
-    }
-
     public void removeBavard(Bavard bavard) {
-        bavardsConnectes.remove(bavard);
-        bavard.setConcierge(null); // Retirer le concierge du bavard
+        if (bavardsConnectes.contains(bavard)) {
+            bavardsConnectes.remove(bavard);
+            conciergeUI.addMessage("Bavard : " + bavard.getNom() + " s'est déconnecté !");
+            bavard.setConcierge(null); // Retirer le concierge du bavard
+        }
     }
 }

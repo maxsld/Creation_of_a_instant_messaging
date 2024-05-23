@@ -1,13 +1,15 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class BavardGUI extends JFrame {
     private final JTextField nomField;
     private final JButton creerBavardButton;
     private final JButton connecterBavardButton;
+    private final JButton deconnecterBavardButton;
     private final JComboBox<String> bavardComboBox;
+    private final JComboBox<String> bavardConnecteComboBox;
 
     private Batiment batiment;
 
@@ -23,7 +25,9 @@ public class BavardGUI extends JFrame {
         nomField = new JTextField(20);
         creerBavardButton = new JButton("Créer Bavard");
         connecterBavardButton = new JButton("Connecter Bavard");
+        deconnecterBavardButton = new JButton("Déconnecter Bavard");
         bavardComboBox = new JComboBox<>();
+        bavardConnecteComboBox = new JComboBox<>();
 
         // Création d'un panneau principal avec une bordure vide et une disposition verticale
         JPanel mainPanel = new JPanel();
@@ -38,6 +42,7 @@ public class BavardGUI extends JFrame {
 
         // Ajustement de la taille de la JComboBox et du JTextField
         bavardComboBox.setPreferredSize(new Dimension(250, 30));
+        bavardConnecteComboBox.setPreferredSize(new Dimension(250, 30));
         nomField.setPreferredSize(new Dimension(500, 30));
 
         // Création d'un panneau pour la JComboBox et le bouton de connexion
@@ -46,10 +51,18 @@ public class BavardGUI extends JFrame {
         comboPanel.add(bavardComboBox);
         comboPanel.add(connecterBavardButton);
 
+        // Création d'un panneau pour la JComboBox des bavards connectés et le bouton de déconnexion
+        JPanel connectedPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        connectedPanel.add(new JLabel("Bavard connecté:"));
+        connectedPanel.add(bavardConnecteComboBox);
+        connectedPanel.add(deconnecterBavardButton);
+
         // Ajout des panneaux au panneau principal
         mainPanel.add(inputPanel);
         mainPanel.add(Box.createVerticalStrut(10)); // Espace vertical
         mainPanel.add(comboPanel);
+        mainPanel.add(Box.createVerticalStrut(10)); // Espace vertical
+        mainPanel.add(connectedPanel);
 
         // Ajout du panneau principal à la fenêtre
         add(mainPanel);
@@ -61,7 +74,7 @@ public class BavardGUI extends JFrame {
                 String nom = nomField.getText();
                 if (!nom.isEmpty()) {
                     Bavard bavard = batiment.creerBavard(nom);
-                    updateBavardComboBox(); // Mettre à jour la JComboBox
+                    updateBavardComboBox(); // Mettre à jour les JComboBox
                     JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " créé avec succès!");
                     batiment.afficherBavardsCrees();
                 } else {
@@ -79,7 +92,7 @@ public class BavardGUI extends JFrame {
                     for (Bavard bavard : batiment.getListBavardsCrees()) {
                         if (bavard.getNom().equals(nom)) {
                             batiment.connecterBavard(bavard); // Connecter le bavard sélectionné
-                            updateBavardComboBox(); // Mettre à jour la JComboBox
+                            updateBavardComboBox(); // Mettre à jour les JComboBox
                             JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " connecté avec succès!");
                             batiment.afficherBavardsConnectes();
                             break;
@@ -87,6 +100,27 @@ public class BavardGUI extends JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(BavardGUI.this, "Veuillez sélectionner un bavard à connecter!");
+                }
+            }
+        });
+
+        deconnecterBavardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nom = (String) bavardConnecteComboBox.getSelectedItem(); // Récupérer le nom du bavard connecté sélectionné
+                if (nom != null) {
+                    // Récupérer le bavard correspondant au nom sélectionné
+                    for (Bavard bavard : batiment.getListBavardsConnectes()) {
+                        if (bavard.getNom().equals(nom)) {
+                            batiment.deconnecterBavard(bavard); // Déconnecter le bavard sélectionné
+                            updateBavardComboBox(); // Mettre à jour les JComboBox
+                            JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " déconnecté avec succès!");
+                            batiment.afficherBavardsConnectes();
+                            break;
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(BavardGUI.this, "Veuillez sélectionner un bavard à déconnecter!");
                 }
             }
         });
@@ -105,10 +139,16 @@ public class BavardGUI extends JFrame {
 
     private void updateBavardComboBox() {
         bavardComboBox.removeAllItems();
+        bavardConnecteComboBox.removeAllItems();
+
         for (Bavard b : batiment.getListBavardsCrees()) {
             if (!batiment.getListBavardsConnectes().contains(b)) {
                 bavardComboBox.addItem(b.getNom());
             }
+        }
+
+        for (Bavard b : batiment.getListBavardsConnectes()) {
+            bavardConnecteComboBox.addItem(b.getNom());
         }
     }
 }
