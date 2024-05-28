@@ -10,7 +10,7 @@ public class Bavard implements PapotageListener {
     public String getNom() {
         return nom;
     }
-
+    
     // Constructeur
     public Bavard(String nom) {
         this.nom = nom;
@@ -56,5 +56,9 @@ public class Bavard implements PapotageListener {
     // Méthode pour définir l'interface utilisateur du bavard
     public void setBavardInterface(BavardInterface bavardInterface) {
         this.bavardInterface = bavardInterface;
+    }
+
+    public BavardInterface getBavardInterface() {
+        return bavardInterface;
     }
 }

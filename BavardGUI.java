@@ -11,14 +11,14 @@ public class BavardGUI extends JFrame {
     private final JComboBox<String> bavardComboBox;
     private final JComboBox<String> bavardConnecteComboBox;
 
-    private Batiment batiment;
+    private final Batiment batiment;
 
     public BavardGUI(Batiment batiment) {
         this.batiment = batiment; // Utiliser l'instance de Batiment passée en paramètre
 
         setTitle("Gestion des Bavards");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(340, 400);
+        setSize(340, 450);
         setLocationRelativeTo(null);
 
         // Initialisation des composants
@@ -95,6 +95,10 @@ public class BavardGUI extends JFrame {
                             updateBavardComboBox(); // Mettre à jour les JComboBox
                             JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " connecté avec succès!");
                             batiment.afficherBavardsConnectes();
+                            
+                            BavardInterface bavardInterface = new BavardInterface(bavard);
+                            bavard.setBavardInterface(bavardInterface);
+                            bavardInterface.setVisible(true);
                             break;
                         }
                     }
@@ -103,7 +107,7 @@ public class BavardGUI extends JFrame {
                 }
             }
         });
-
+        
         deconnecterBavardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,6 +117,10 @@ public class BavardGUI extends JFrame {
                     for (Bavard bavard : batiment.getListBavardsConnectes()) {
                         if (bavard.getNom().equals(nom)) {
                             batiment.deconnecterBavard(bavard); // Déconnecter le bavard sélectionné
+                            BavardInterface bavardInterface = bavard.getBavardInterface();
+                            if (bavardInterface != null) {
+                                bavardInterface.dispose(); // Fermer la fenêtre
+                            }
                             updateBavardComboBox(); // Mettre à jour les JComboBox
                             JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " déconnecté avec succès!");
                             batiment.afficherBavardsConnectes();
@@ -124,17 +132,7 @@ public class BavardGUI extends JFrame {
                 }
             }
         });
-
-        // Ajout d'un bouton pour ouvrir la deuxième interface
-        JButton ouvrirDeuxiemeInterfaceButton = new JButton("Envoyer un message");
-        mainPanel.add(ouvrirDeuxiemeInterfaceButton);
-
-        ouvrirDeuxiemeInterfaceButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new DeuxiemeInterface(batiment).setVisible(true);
-            }
-        });
+        
     }
 
     private void updateBavardComboBox() {
