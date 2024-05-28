@@ -67,21 +67,33 @@ public class BavardGUI extends JFrame {
         // Ajout du panneau principal à la fenêtre
         add(mainPanel);
 
-        // Ajout des listeners aux boutons
+        // Création d'un bavard
         creerBavardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nom = nomField.getText();
                 if (!nom.isEmpty()) {
-                    Bavard bavard = batiment.creerBavard(nom);
-                    updateBavardComboBox(); // Mettre à jour les JComboBox
-                    JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " créé avec succès!");
-                    batiment.afficherBavardsCrees();
+                    boolean exists = false;
+                    for (Bavard bavard : batiment.getListBavardsCrees()) {
+                        if (bavard.getNom().equalsIgnoreCase(nom)) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists) {
+                        Bavard bavard = batiment.creerBavard(nom);
+                        updateBavardComboBox(); // Mettre à jour les JComboBox
+                        JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " créé avec succès!");
+                        batiment.afficherBavardsCrees();
+                    } else {
+                        JOptionPane.showMessageDialog(BavardGUI.this, "Un Bavard avec ce nom existe déjà!");
+                    }
                 } else {
                     JOptionPane.showMessageDialog(BavardGUI.this, "Veuillez saisir un nom pour le Bavard!");
                 }
             }
         });
+
 
         connecterBavardButton.addActionListener(new ActionListener() {
             @Override
@@ -118,12 +130,12 @@ public class BavardGUI extends JFrame {
                         if (bavard.getNom().equals(nom)) {
                             batiment.deconnecterBavard(bavard); // Déconnecter le bavard sélectionné
                             BavardInterface bavardInterface = bavard.getBavardInterface();
-                            if (bavardInterface != null) {
-                                bavardInterface.dispose(); // Fermer la fenêtre
-                            }
                             updateBavardComboBox(); // Mettre à jour les JComboBox
                             JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " déconnecté avec succès!");
                             batiment.afficherBavardsConnectes();
+                            if (bavardInterface != null) {
+                                bavardInterface.dispose(); // Fermer la fenêtre
+                            }
                             break;
                         }
                     }
