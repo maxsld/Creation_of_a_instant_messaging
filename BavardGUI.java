@@ -4,14 +4,14 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class BavardGUI extends JFrame {
-    private final JTextField nomField;
-    private final JButton creerBavardButton;
-    private final JButton connecterBavardButton;
-    private final JButton deconnecterBavardButton;
-    private final JComboBox<String> bavardComboBox;
-    private final JComboBox<String> bavardConnecteComboBox;
+    private final JTextField nomField; // Champ de texte pour entrer le nom du Bavard
+    private final JButton creerBavardButton; // Bouton pour créer un Bavard
+    private final JButton connecterBavardButton; // Bouton pour connecter un Bavard
+    private final JButton deconnecterBavardButton; // Bouton pour déconnecter un Bavard
+    private final JComboBox<String> bavardComboBox; // ComboBox pour afficher les Bavards créés mais non connectés
+    private final JComboBox<String> bavardConnecteComboBox; // ComboBox pour afficher les Bavards connectés
 
-    private final Batiment batiment;
+    private final Batiment batiment; // Instance de la classe Batiment
 
     public BavardGUI(Batiment batiment) {
         this.batiment = batiment; // Utiliser l'instance de Batiment passée en paramètre
@@ -67,11 +67,11 @@ public class BavardGUI extends JFrame {
         // Ajout du panneau principal à la fenêtre
         add(mainPanel);
 
-        // Création d'un bavard
+        // Gestion du bouton de création d'un Bavard
         creerBavardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nom = nomField.getText();
+                String nom = nomField.getText(); // Récupérer le nom entré
                 if (!nom.isEmpty()) {
                     boolean exists = false;
                     for (Bavard bavard : batiment.getListBavardsCrees()) {
@@ -81,10 +81,10 @@ public class BavardGUI extends JFrame {
                         }
                     }
                     if (!exists) {
-                        Bavard bavard = batiment.creerBavard(nom);
+                        Bavard bavard = batiment.creerBavard(nom); // Créer le Bavard
                         updateBavardComboBox(); // Mettre à jour les JComboBox
                         JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " créé avec succès!");
-                        batiment.afficherBavardsCrees();
+                        batiment.afficherBavardsCrees(); // Afficher la liste des Bavards créés dans la console
                     } else {
                         JOptionPane.showMessageDialog(BavardGUI.this, "Un Bavard avec ce nom existe déjà!");
                     }
@@ -94,7 +94,7 @@ public class BavardGUI extends JFrame {
             }
         });
 
-
+        // Gestion du bouton de connexion d'un Bavard
         connecterBavardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,11 +106,11 @@ public class BavardGUI extends JFrame {
                             batiment.connecterBavard(bavard); // Connecter le bavard sélectionné
                             updateBavardComboBox(); // Mettre à jour les JComboBox
                             JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " connecté avec succès!");
-                            batiment.afficherBavardsConnectes();
-                            
-                            BavardInterface bavardInterface = new BavardInterface(bavard);
-                            bavard.setBavardInterface(bavardInterface);
-                            bavardInterface.setVisible(true);
+                            batiment.afficherBavardsConnectes(); // Afficher la liste des Bavards connectés dans la console
+
+                            BavardInterface bavardInterface = new BavardInterface(bavard); // Créer l'interface du Bavard
+                            bavard.setBavardInterface(bavardInterface); // Associer l'interface au Bavard
+                            bavardInterface.setVisible(true); // Afficher l'interface du Bavard
                             break;
                         }
                     }
@@ -119,7 +119,8 @@ public class BavardGUI extends JFrame {
                 }
             }
         });
-        
+
+        // Gestion du bouton de déconnexion d'un Bavard
         deconnecterBavardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -132,9 +133,9 @@ public class BavardGUI extends JFrame {
                             BavardInterface bavardInterface = bavard.getBavardInterface();
                             updateBavardComboBox(); // Mettre à jour les JComboBox
                             JOptionPane.showMessageDialog(BavardGUI.this, "Bavard " + nom + " déconnecté avec succès!");
-                            batiment.afficherBavardsConnectes();
+                            batiment.afficherBavardsConnectes(); // Afficher la liste des Bavards connectés dans la console
                             if (bavardInterface != null) {
-                                bavardInterface.dispose(); // Fermer la fenêtre
+                                bavardInterface.dispose(); // Fermer la fenêtre de l'interface du Bavard
                             }
                             break;
                         }
@@ -144,9 +145,9 @@ public class BavardGUI extends JFrame {
                 }
             }
         });
-        
     }
 
+    // Mettre à jour les JComboBox avec les Bavards créés et connectés
     private void updateBavardComboBox() {
         bavardComboBox.removeAllItems();
         bavardConnecteComboBox.removeAllItems();
