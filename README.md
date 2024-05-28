@@ -31,10 +31,6 @@ ePapotage est une application de messagerie Java permettant aux utilisateurs, ap
 3. Utilisez les fonctionnalités de filtrage et de thématisation pour organiser vos discussions.
 4. Explorez les options avancées telles que les discussions privées.
 
-## Contribution
-
-Les contributions sont les bienvenues ! Si vous souhaitez améliorer BavardageApp ou corriger des bugs, n'hésitez pas à ouvrir une Pull Request.
-
 ## Auteur
 
 Ce projet a été développé par SOLDAN Maxens.
