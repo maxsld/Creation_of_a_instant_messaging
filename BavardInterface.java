@@ -1,5 +1,5 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -8,7 +8,8 @@ public class BavardInterface extends JFrame {
     private final JTextArea bodyArea;
     private final JButton sendButton;
     private final Bavard bavard;
-    private final JTextArea receivedMessagesArea;
+    private final DefaultListModel<String> listModel;
+    private final JList<String> receivedMessagesList;
 
     // Constructeur de l'interface BavardInterface
     public BavardInterface(Bavard bavard) {
@@ -52,9 +53,10 @@ public class BavardInterface extends JFrame {
         JPanel receivedMessagesPanel = new JPanel();
         receivedMessagesPanel.setLayout(new BorderLayout());
         receivedMessagesPanel.add(new JLabel("Messages reçus:"), BorderLayout.NORTH);
-        receivedMessagesArea = new JTextArea();
-        receivedMessagesArea.setEditable(false);
-        JScrollPane receivedMessagesScrollPane = new JScrollPane(receivedMessagesArea);
+        listModel = new DefaultListModel<>();
+        receivedMessagesList = new JList<>(listModel);
+        receivedMessagesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane receivedMessagesScrollPane = new JScrollPane(receivedMessagesList);
         receivedMessagesPanel.add(receivedMessagesScrollPane, BorderLayout.CENTER);
 
         // Ajouter les différents panneaux à la fenêtre principale
@@ -67,25 +69,50 @@ public class BavardInterface extends JFrame {
         sendButton.addActionListener((ActionEvent e) -> {
             sendMessage();
         });
+
+        // Ajouter un MouseListener pour ouvrir un message dans une nouvelle fenêtre
+        receivedMessagesList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { // Double clic
+                    int index = receivedMessagesList.locationToIndex(e.getPoint());
+                    if (index >= 0) {
+                        String message = listModel.get(index);
+                        openMessageInNewWindow(message);
+                    }
+                }
+            }
+        });
     }
 
     // Méthode pour envoyer un message
     private void sendMessage() {
         String subject = subjectField.getText();
         String body = bodyArea.getText();
-        if (subject.isEmpty() && body.isEmpty()){
+        if (subject.isEmpty() && body.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Veuillez remplir le sujet et le message.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-        else if (subject.isEmpty()){
+        } else if (subject.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Veuillez remplir le sujet.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+        } else {
             bavard.sendMessage(subject, body);
         }
     }
 
-    // Méthode pour ajouter un message à la zone de texte des messages reçus
+    // Méthode pour ajouter un message à la liste des messages reçus
     public void addMessage(String message) {
-        receivedMessagesArea.append(message + "\n");
+        listModel.addElement(message);
     }
-}
+
+    // Méthode pour ouvrir un message dans une nouvelle fenêtre
+    private void openMessageInNewWindow(String message) {
+        JFrame messageFrame = new JFrame("Message reçu");
+        messageFrame.setSize(300, 200);
+        messageFrame.setLocationRelativeTo(this);
+        JTextArea messageArea = new JTextArea(message);
+        messageArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(messageArea);
+        messageFrame.add(scrollPane);
+        messageFrame.setVisible(true);
+    }
+
+    }
+
